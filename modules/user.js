@@ -5,7 +5,7 @@ const SECRET = 'abc'
 const {
   findUser,
   registerUser
-} = require('../DAO/user')
+} = require('../DAO/users')
 
 const {
   isPasswordValid
