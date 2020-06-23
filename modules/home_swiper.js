@@ -1,7 +1,7 @@
 const {
   homeSwiper,
   homeSwiperCataory
-} = require('../DAO/home.js')
+} = require('../DAO/home_swiper.js')
 
 
 // 发送 home_swiper 和 cataory
@@ -14,7 +14,7 @@ function home_swiper(req, res) {
       for (let i = 0; i < cataory.length; i++) {
         cataory[i].cataoryList = arr[i]
       }
-      console.log(cataory)
+      // console.log(cataory)
       res.json({
         message: {
           cataory,
@@ -27,10 +27,7 @@ function home_swiper(req, res) {
       })
     })
   })
-
 }
 
 
-module.exports = {
-  home_swiper
-}
+module.exports = home_swiper

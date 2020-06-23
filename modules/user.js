@@ -14,10 +14,10 @@ const {
 // 注册 寻找是否存在用户
 function registerFindUser(req, res, data) {
   findUser(data, (results) => {
-    console.log(results)
+    // console.log(results)
     if (results.length == 0) {
       registerUser(data, (data) => {
-        console.log(data)
+        // console.log(data)
         res.json({
           message: [],
           meta: {
@@ -51,7 +51,7 @@ function loginFindUser(req, res, data) {
       })
     } else {
       const is = isPasswordValid(data.password, results[0].password)
-      console.log(is)
+      // console.log(is)
       if (is) {
         const token = jwt.sign({
           id: String(results[0].username)

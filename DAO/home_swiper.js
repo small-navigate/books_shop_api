@@ -1,9 +1,4 @@
-const {
-  db
-} = require('./DAO')
-const {
-  each
-} = require('../modules/home')
+const db = require('./DAO')
 
 function homeSwiper(callback) {
   const str = `select * from home_swiper`

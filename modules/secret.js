@@ -13,9 +13,9 @@ function password(password) {
 
 //解密
 function isPasswordValid(newVal, oldVal) {
-  console.log(oldVal, newVal)
+  // console.log(oldVal, newVal)
   const is = bcrypt.compareSync(newVal, oldVal)
-  console.log(is)
+  // console.log(is)
   return is
 }
 

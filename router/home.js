@@ -1,13 +1,23 @@
 const express = require('express')
-const router = express.Router()
-const {
-  home_swiper
-} = require('../modules/home')
+const routerHome = express.Router()
+const home_swiper = require('../modules/home_swiper')
+const home_content = require('../modules/home_content')
 
-const routerHome = router.get('/api/home/swiper', (req, res, next) => {
+
+routerHome.get('/api/home/swiper', (req, res, next) => {
+  console.log('  ')
+  console.log('---------------------localhost:3000/api/home/swiper')
+  console.log('  ')
+  console.log('_____________________________________________')
   home_swiper(req, res)
 })
 
-module.exports = {
-  routerHome
-}
+routerHome.get('/api/home/content', (req, res, next) => {
+  console.log('  ')
+  console.log('---------------------localhost:3000/api/home/content')
+  console.log('  ')
+  console.log('_____________________________________________')
+  home_content(req, res)
+})
+
+module.exports = routerHome

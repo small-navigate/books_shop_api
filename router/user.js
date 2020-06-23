@@ -18,10 +18,18 @@ router.all('/api/*', (req, res, next) => {
 })
 
 router.post('/api/login', (req, res, next) => {
+  console.log('  ')
+  console.log('--------------------->localhost:3000/api/login')
+  console.log('  ')
+  console.log('_____________________________________________')
   loginFindUser(req, res, req.body)
 })
 
 router.post('/api/register', (req, res, next) => {
+  console.log('  ')
+  console.log('---------------------localhost:3000/api/register')
+  console.log('  ')
+  console.log('_____________________________________________')
   registerFindUser(req, res, req.body)
 
 })
