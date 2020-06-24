@@ -1,4 +1,7 @@
 const db = require('./DAO')
+const {
+  password
+} = require('../modules/secret')
 // 查找用户
 function findUser(data, callback) {
   const str = `select * from user where username = "${data.username}"`
