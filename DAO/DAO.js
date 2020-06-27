@@ -12,7 +12,7 @@ const options = {
 function db() {
 
 
-  const connection = mysql.createConnection(options)
+  let connection = mysql.createConnection(options)
   connection.connect()
 
   connection.on('error', err => {
