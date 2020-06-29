@@ -6,7 +6,6 @@ const {
 function findUser(data, callback) {
   const str = `select * from user where username = "${data.username}"`
   db.query(str, (err, results) => {
-    // console.log('find', results)
     callback(results)
   })
 }
@@ -16,11 +15,19 @@ function registerUser(data, callback) {
   const pass = password(data.password)
   const str = `insert into user (username,password) values("${data.username}","${pass}")`
   db.query(str, (err, results) => {
-    // console.log('insert', results)
     callback(data)
   })
 }
+
+function findUserName(user, callback) {
+  const str = `select * from user where username = "${user}"`
+  db.query(str, (err, results) => {
+    callback(JSON.parse(JSON.stringify(results)))
+  })
+}
+
 module.exports = {
   findUser,
-  registerUser
+  registerUser,
+  findUserName
 }

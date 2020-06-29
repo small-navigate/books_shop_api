@@ -4,7 +4,8 @@ const SECRET = 'abc'
 
 const {
   findUser,
-  registerUser
+  registerUser,
+  findUserName
 } = require('../DAO/users')
 
 const {
@@ -14,10 +15,8 @@ const {
 // 注册 寻找是否存在用户
 function registerFindUser(req, res, data) {
   findUser(data, (results) => {
-    // console.log(results)
     if (results.length == 0) {
       registerUser(data, (data) => {
-        // console.log(data)
         res.json({
           message: [],
           meta: {
@@ -41,6 +40,7 @@ function registerFindUser(req, res, data) {
 // 登录用户
 function loginFindUser(req, res, data) {
   findUser(data, (results) => {
+    const user = JSON.parse(JSON.stringify(results))[0]
     if (results.length == 0) {
       res.json({
         message: [],
@@ -51,13 +51,14 @@ function loginFindUser(req, res, data) {
       })
     } else {
       const is = isPasswordValid(data.password, results[0].password)
-      // console.log(is)
       if (is) {
         const token = jwt.sign({
           id: String(results[0].username)
         }, SECRET) // 签名
         res.json({
-          message: [],
+          message: [{
+            user
+          }],
           meta: {
             msg: "登录成功",
             status: 200
@@ -77,7 +78,37 @@ function loginFindUser(req, res, data) {
   })
 }
 
+// 刷新查找用户
+function findUserId(req, res, token) {
+  jwt.verify(token, SECRET, (err, decoded) => {
+    if (err) {
+      res.json({
+        message: data,
+        meta: {
+          msg: "错误",
+          status: 401
+        }
+      })
+    } else {
+      findUserName(decoded.id, data => {
+        res.json({
+          message: [
+            data
+          ],
+          meta: {
+            msg: "成功",
+            status: 200
+          }
+        })
+      })
+    }
+  })
+
+
+}
+
 module.exports = {
   registerFindUser,
-  loginFindUser
+  loginFindUser,
+  findUserId
 }
