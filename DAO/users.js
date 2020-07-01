@@ -18,7 +18,7 @@ function registerUser(data, callback) {
     callback(data)
   })
 }
-
+// 刷新浏览器查找用户
 function findUserName(user, callback) {
   const str = `select * from user where username = "${user}"`
   db.query(str, (err, results) => {
@@ -26,8 +26,27 @@ function findUserName(user, callback) {
   })
 }
 
+// 查找用户购物车信息
+function findCart(id, callback) {
+  const str = `select * from shopcat where userid = "${id}"`
+  db.query(str, (err, results) => {
+    if (results.length === 0) {
+      callback({
+        id: null,
+        userid: null,
+        bookid: null,
+        num: null
+      })
+    } else {
+      callback(JSON.parse(JSON.stringify(results)))
+    }
+
+  })
+}
+
 module.exports = {
   findUser,
   registerUser,
-  findUserName
+  findUserName,
+  findCart
 }

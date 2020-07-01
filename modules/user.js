@@ -5,7 +5,8 @@ const SECRET = 'abc'
 const {
   findUser,
   registerUser,
-  findUserName
+  findUserName,
+  findCart
 } = require('../DAO/users')
 
 const {
@@ -41,6 +42,7 @@ function registerFindUser(req, res, data) {
 function loginFindUser(req, res, data) {
   findUser(data, (results) => {
     const user = JSON.parse(JSON.stringify(results))[0]
+
     if (results.length == 0) {
       res.json({
         message: [],
@@ -55,16 +57,20 @@ function loginFindUser(req, res, data) {
         const token = jwt.sign({
           id: String(results[0].username)
         }, SECRET) // 签名
-        res.json({
-          message: [{
-            user
-          }],
-          meta: {
-            msg: "登录成功",
-            status: 200
-          },
-          token
+        findCart(user.id, mes => {
+          user.info = mes
+          res.json({
+            message: [{
+              user
+            }],
+            meta: {
+              msg: "登录成功",
+              status: 200
+            },
+            token
+          })
         })
+
       } else {
         res.json({
           message: [],
@@ -90,16 +96,25 @@ function findUserId(req, res, token) {
         }
       })
     } else {
-      findUserName(decoded.id, data => {
-        res.json({
-          message: [
-            data
-          ],
-          meta: {
-            msg: "成功",
-            status: 200
-          }
+      findUserName(decoded.id, results => {
+        const data = results[0]
+        findCart(data.id, result => {
+          result.forEach(v => {
+            v.status = false
+          })
+          console.log(result)
+          data.info = result
+          res.json({
+            message: [
+              data
+            ],
+            meta: {
+              msg: "成功",
+              status: 200
+            }
+          })
         })
+
       })
     }
   })
