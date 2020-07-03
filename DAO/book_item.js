@@ -16,8 +16,21 @@ function bookquery(id, callback) {
   })
 }
 
+function getBookItem(id, callback) {
+  const str = `select id,bookname,author,viewcount,bookimg,pubcompany from book where id = "${id}"`
+  db.query(str, (err, result) => {
+    callback(JSON.parse(JSON.stringify(result)))
+  })
+}
 
-
+function rander(callback) {
+  const str = `select id,bookname,author,viewcount,bookimg FROM book ORDER BY rand() LIMIT 10`
+  db.query(str, (err, results) => {
+    callback(JSON.parse(JSON.stringify(results)))
+  })
+}
 module.exports = {
-  bookquery
+  bookquery,
+  getBookItem,
+  rander
 }
