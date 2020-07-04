@@ -44,9 +44,25 @@ function findCart(id, callback) {
   })
 }
 
+
+// 修改用户信息
+function putUserInfo(id, info) {
+  const str = `UPDATE user SET name = '${info.name}', sex='${info.sex}',age='${info.age}',introduce='${info.introduce}' WHERE id=${id};`
+  db.query(str)
+}
+
+// 修改用户头像
+function putUserAvatar(id, url) {
+  console.log(url)
+  const str = `UPDATE user SET portrait='${url}' WHERE id=${id};`
+  db.query(str)
+}
+
 module.exports = {
   findUser,
   registerUser,
   findUserName,
-  findCart
+  findCart,
+  putUserInfo,
+  putUserAvatar
 }

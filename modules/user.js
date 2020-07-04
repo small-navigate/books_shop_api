@@ -1,12 +1,16 @@
 const jwt = require('jsonwebtoken')
 const SECRET = 'abc'
-
+const formidable = require('formidable')
+const path = require('path')
+const url = require('url')
 
 const {
   findUser,
   registerUser,
   findUserName,
-  findCart
+  findCart,
+  putUserInfo,
+  putUserAvatar
 } = require('../DAO/users')
 
 const {
@@ -118,12 +122,48 @@ function findUserId(req, res, token) {
       })
     }
   })
+}
 
+// 修改用户信息
+function putUser(id, info, req, res) {
+  putUserInfo(id, info)
+  res.json({
+    message: [],
+    meta: {
+      msg: "成功",
+      status: 200
+    }
+  })
+}
 
+function putUserAva(req, res) {
+  const form = new formidable.IncomingForm()
+  form.encoding = 'utf-8' // 编码
+  // 保存拓展名
+  form.keepExtensions = true
+  // 文件存储路径
+  form.uploadDir = path.join(__dirname, '../public')
+  form.parse(req, (err, fields, files) => {
+    if (err) return next(err)
+    const path = url.parse(files.file.path).pathname.match(/\/(upload_.+)$/)[1]
+    console.log(url.parse(files.file.path))
+    let imgName = 'http://192.168.101.13:3000/' + path
+    console.log(imgName)
+    putUserAvatar(fields.id, imgName)
+    res.json({
+      message: imgName,
+      meta: {
+        msg: "成功",
+        status: 200
+      }
+    })
+  })
 }
 
 module.exports = {
   registerFindUser,
   loginFindUser,
-  findUserId
+  findUserId,
+  putUser,
+  putUserAva
 }

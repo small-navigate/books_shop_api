@@ -3,8 +3,11 @@ const router = express.Router()
 const {
   registerFindUser,
   loginFindUser,
-  findUserId
+  findUserId,
+  putUser,
+  putUserAva
 } = require('../modules/user')
+
 
 
 
@@ -33,6 +36,21 @@ router.get('/api/finduser', (req, res, next) => {
   findUserId(req, res, token)
 })
 
+router.put('/api/putuser', (req, res, next) => {
+  console.log('  ')
+  console.log(`---------------------http://localhost:3000/api/putuser/`)
+  console.log('  ')
+  console.log('_____________________________________________')
+  putUser(req.body.id, req.body.value, req, res)
+})
 
+// 上传头像
+router.post('/avatar/uploader', (req, res) => {
+  console.log('  ')
+  console.log(`---------------------http://localhost:3000/avatar/uploader/`)
+  console.log('  ')
+  console.log('_____________________________________________')
+  putUserAva(req, res)
+})
 
 module.exports = router

@@ -27,11 +27,6 @@ app.all('/api/*', function (req, res, next) {
   next()
 })
 
-router.put('/api/test', (req, res) => {
-  res.json({
-    status: 234
-  })
-})
 
 app.use(express.json())
 app.use(router)
