@@ -6,6 +6,7 @@ const routerClassification = require('./router/classification')
 const routerDetails = require('./router/details')
 const routerBookItem = require('./router/book_item')
 const routerCart = require('./router/shop_cart')
+const routerSearch = require('./router/search')
 
 // 设置跨域和相应数据格式
 app.all('/api/*', function (req, res, next) {
@@ -35,6 +36,7 @@ app.use(routerClassification)
 app.use(routerDetails)
 app.use(routerBookItem)
 app.use(routerCart)
+app.use(routerSearch)
 app.use(express.static('public'))
 
 app.listen(3000)
